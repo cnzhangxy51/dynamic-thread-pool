@@ -1,0 +1,64 @@
+server:
+  port: 8089
+
+# 动态线程池管理配置
+dynamic:
+  thread:
+    pool:
+      # web 平台必须要开启redis，钉钉
+      web:
+        # 状态；true = 开启、false 关闭
+        enabled: true
+      config:
+        # 监控相关
+        monitor:
+          # 状态；true = 开启、false 关闭
+          enabled: true
+          channel:
+            platform: redis
+            cron: "*/10 * * * * ?"
+        # 告警相关
+        notifier:
+          # 状态；true = 开启、false 关闭
+          enabled: true
+          # 告警平台相关
+
+          # 钉钉
+#          channel:
+#            platform: dingding
+#            url:
+#            CUSTOM_ROBOT_TOKEN:
+#            USER_ID:
+#            SECRET:
+#            cron: "*/30 * * * * ?"
+
+          # 自定义 补充信息放在extend里
+#          channel:
+#            platform: wechat
+#            url:
+#            cron: "*/30 * * * * ?"
+          channel:
+            platform: wechat
+            url:
+            key:
+            cron: "*/30 * * * * ?"
+            messages:
+              user:
+              extend: none
+
+        # 动态更新相关
+        refresher:
+          enabled: false
+          channel:
+            platform: redis
+        # redis 相关，如果不需要就不用配
+        redis:
+          enabled: true
+          host:
+          port:
+          password:
+
+logging:
+  level:
+    root: info
+  config: classpath:logback-spring.xml
